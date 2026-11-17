@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUTBOL 7 | La Gran 7 - Trevelin, Chubut</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyanBtn: '#61e2fc',
+                        cyanHover: '#38bdf8',
+                        resCyan: '#61e2fc',
+                        resCyanInput: '#80e9fd',
+                        darkBrown: '#3d2314',
+                        darkBrownHover: '#221108'
+                    },
+                    fontFamily: {
+                        bebas: ['"Bebas Neue"', 'sans-serif'],
+                        montserrat: ['"Montserrat"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Dusk Mountain Sunset background matching Image 1 */
+        .mountain-hero-bg {
+            background: linear-gradient(180deg, rgba(12, 18, 28, 0.4) 0%, rgba(10, 14, 23, 0.45) 50%, rgba(8, 12, 20, 0.92) 100%),
+                        url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center 65%;
+            background-repeat: no-repeat;
+        }
+
+        /* White card frame around map matching Image 1 */
+        .map-card-container {
+            background: #ffffff;
+            border: 2px solid #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Glassmorphism modal background */
+        .modal-glass {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        /* Custom scrollbar for time slot list */
+        .time-slots-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .time-slots-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+        .time-slots-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-[#0A0E17] text-white font-sans antialiased h-full overflow-x-hidden selection:bg-cyanBtn selection:text-black">
+
+    <!-- ================================================================= -->
+    <!-- 1. PANTALLA PRINCIPAL (HERO VIEW - EXACT MATCH OF IMAGE 1)         -->
+    <!-- ================================================================= -->
+    <main id="hero-view" class="min-h-screen w-full mountain-hero-bg flex flex-col justify-between px-6 sm:px-12 lg:px-20 py-6 relative">
+        
+        <!-- HEADER / NAVIGATION BAR -->
+        <header class="w-full max-w-7xl mx-auto flex items-center justify-between z-20 py-2">
+            <!-- Brand Title Top Left -->
+            <a href="#" class="font-bebas text-3xl sm:text-4xl tracking-widest text-white hover:text-cyanBtn transition-colors">
+                FUTBOL 7
+            </a>
+
+            <!-- Navigation Links Top Right -->
+            <nav class="flex items-center space-x-6 sm:space-x-12">
+                <button onclick="openModal('modal-servicios')" class="text-sm sm:text-base font-medium text-gray-100 hover:text-cyanBtn transition-colors">
+                    Servicios
+                </button>
+                <button onclick="openModal('modal-contacto')" class="text-sm sm:text-base font-medium text-gray-100 hover:text-cyanBtn transition-colors">
+                    Contacto
+                </button>
+                <button onclick="openReservationView()" class="bg-cyanBtn text-slate-950 font-extrabold px-6 sm:px-8 py-2 rounded-full text-xs sm:text-sm uppercase tracking-wider hover:bg-cyanHover hover:scale-105 active:scale-95 transition-all shadow-xl">
+                    RESERVAR
+                </button>
+            </nav>
+        </header>
+
+        <!-- MAIN HERO CONTENT -->
+        <section class="w-full max-w-7xl mx-auto flex-1 flex flex-col justify-between py-6 lg:py-10 z-10">
+            
+            <!-- Stacked Large Headline (Upper Left) -->
+            <div class="max-w-4xl pt-2 sm:pt-6">
+                <h1 class="font-bebas text-5xl sm:text-7xl lg:text-8xl text-white tracking-tight uppercase leading-[0.92] drop-shadow-2xl select-none">
+                    JUGÁ TU PARTIDO CON<br>
+                    NOSOTROS, DISFRUTÁ,<br>
+                    GANÁ, COMPETÍ,<br>
+                    ENTRENÁ.
+                </h1>
+            </div>
+
+            <!-- Bottom Row: Real Google Maps Card (Left) + Text Copy & CTA (Right) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-8 lg:pt-12">
+                
+                <!-- Lower Left: Google Maps Embed Card -->
+                <div class="lg:col-span-5 w-full">
+                    <div class="map-card-container rounded-sm p-1.5 w-full max-w-md relative">
+                        
+                        <!-- High-Resolution Google Maps Iframe -->
+                        <div class="w-full h-64 sm:h-72 bg-gray-200 relative overflow-hidden rounded-sm border border-gray-300">
+                            <iframe 
+                                title="Mapa Futbol 7 - Trevelin, Chubut"
+                                src="https://maps.google.com/maps?q=Av.+San+Martin,+Trevelin,+Chubut,+Argentina&t=m&z=15&output=embed&iwloc=near" 
+                                class="w-full h-full border-0" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        
+                        <!-- White Footer Card Bar matching Image 1 -->
+                        <div class="flex items-center justify-between text-xs text-gray-800 px-2 py-2 mt-1 font-sans bg-white border-t border-gray-100">
+                            <span class="font-bold text-gray-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-location-dot text-red-600 text-sm"></i>
+                                Av. San Martín, Trevelin (Chubut)
+                            </span>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Av.+San+Mart%C3%ADn,+Trevelin,+Chubut" target="_blank" class="text-sky-600 hover:text-sky-800 font-semibold flex items-center gap-1">
+                                <span>Abrir mapa</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Lower Right: Exact Descriptive Text Copy & Cyan Button (Image 1) -->
+                <div class="lg:col-span-7 flex flex-col justify-end text-left space-y-4 lg:pl-6">
+                    <div class="space-y-4 font-montserrat text-gray-100 text-sm sm:text-base leading-relaxed max-w-2xl">
+                        <p class="font-normal drop-shadow-md">
+                            Vení a jugar con nosotros en <strong class="font-bold text-white">LA GRAN 7</strong>, un espacio para tu equipo, y para tu rival, donde desencadenamos la magia del futbol, y los buenos momentos.
+                        </p>
+                        <p class="font-normal drop-shadow-md">
+                            <strong class="font-bold text-white">LA GRAN 7</strong> dispone de muy buenos y los mejores precios de la zona, junto con una atencion invaluable y una gran pasion por el deporte ¿que esperas para reservar tu hora?
+                        </p>
+                        <p class="font-bebas text-2xl sm:text-3xl tracking-wider text-white font-bold pt-1 drop-shadow-lg">
+                            ¡¡¡VENÍ YA!!!
+                        </p>
+                    </div>
+
+                    <!-- Bright Cyan Oval Button -->
+                    <div class="pt-2">
+                        <button onclick="openReservationView()" class="bg-cyanBtn text-slate-950 font-extrabold text-sm sm:text-base px-10 py-3 rounded-full uppercase tracking-wider hover:bg-cyanHover hover:scale-105 active:scale-95 transition-all shadow-2xl">
+                            RESERVAR
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+
+    <!-- ================================================================= -->
+    <!-- 2. PANTALLA DE RESERVAS (RESERVATION VIEW - EXACT MATCH OF IMAGE 2)-->
+    <!-- ================================================================= -->
+    <div id="reservation-view" class="fixed inset-0 z-50 bg-[#61e2fc] text-slate-900 hidden overflow-y-auto transition-all duration-300">
+        
+        <!-- Top Navigation Bar & Close Button ('X') -->
+        <header class="w-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-cyan-400/40">
+            <button onclick="closeReservationView()" class="flex items-center gap-2 font-bold text-slate-900 hover:text-slate-700 text-sm sm:text-base transition-transform hover:-translate-x-1">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Volver al Inicio</span>
+            </button>
+
+            <div class="font-bebas text-2xl sm:text-3xl tracking-wider text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-futbol text-slate-800"></i>
+                <span>RESERVA DE CANCHA - LA GRAN 7</span>
+            </div>
+
+            <!-- 'X' Close Button Top Right -->
+            <button onclick="closeReservationView()" title="Cerrar" class="text-slate-900 hover:text-slate-700 text-3xl sm:text-4xl font-light focus:outline-none p-1 transition-transform hover:scale-110">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </header>
+
+        <!-- Main Reservation Screen Grid (3 Columns matching Image 2) -->
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT COLUMN: Exact Welcome Message Text from Image 2 -->
+            <div class="lg:col-span-3 text-slate-800 font-sans text-xs sm:text-sm leading-relaxed pr-2 pt-2">
+                <p class="font-normal text-slate-800 tracking-wide uppercase font-montserrat">
+                    BIENVENIDO, esta es la zona de reservacion, aquí puedes elegir una fecha, ver el precio , reservar la cancha a tu nombre y apellido, junnto con tu telefono para poderte contactar en caso de algun inconveniente
+                </p>
+            </div>
+
+            <!-- CENTER COLUMN: Interactive Calendar & Dynamic Available Hours (07:00 to 23:00) -->
+            <div class="lg:col-span-6 bg-[#4edbf7]/40 p-4 sm:p-6 rounded-2xl shadow-inner border border-cyan-300/60">
+                
+                <!-- Month Title Header with Navigation Arrows -->
+                <div class="flex items-center justify-between mb-4">
+                    <button onclick="prevMonth()" class="text-slate-900 hover:text-black p-2 text-xl font-bold transition-transform hover:-translate-x-1">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <h2 id="calendar-month-year" class="font-bebas text-3xl sm:text-4xl text-slate-900 tracking-wider">
+                        OCTUBRE DE 2026
+                    </h2>
+                    <button onclick="nextMonth()" class="text-slate-900 hover:text-black p-2 text-xl font-bold transition-transform hover:translate-x-1">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Days of the Week Header -->
+                <div class="grid grid-cols-7 text-center font-bold text-slate-900 text-xs sm:text-sm mb-2 border-b border-slate-900/15 pb-2">
+                    <div>DO</div>
+                    <div>LU</div>
+                    <div>MA</div>
+                    <div>MI</div>
+                    <div>JU</div>
+                    <div>VI</div>
+                    <div>SA</div>
+                </div>
+
+                <!-- Calendar Days Grid -->
+                <div id="calendar-days-grid" class="grid grid-cols-7 gap-1 sm:gap-2 text-xs sm:text-sm">
+                    <!-- Dynamic Days rendered via JavaScript -->
+                </div>
+
+                <!-- Available Hours Panel (07:00 am to 23:00 pm) -->
+                <div class="mt-6 pt-4 border-t border-slate-900/20">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Horarios Disponibles (<span id="selected-date-label">Selecciona un día</span>)</span>
+                        </span>
+                        <span class="text-[11px] text-slate-800 font-medium">07:00 hs a 23:00 hs</span>
+                    </div>
+
+                    <!-- Time Slot Pills Grid -->
+                    <div id="time-slots-container" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 max-h-48 overflow-y-auto p-1 time-slots-scrollbar">
+                        <!-- Dynamic time slot buttons -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Price Card & Captain Form (Exact Replica Image 2) -->
+            <div class="lg:col-span-3 space-y-6">
+                
+                <!-- Price Box with Thin Red Accent Border (Matching Image 2) -->
+                <div class="border-2 border-red-500/80 bg-[#61e2fc] rounded-lg p-5 relative shadow-md">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-slate-900 font-semibold text-base sm:text-lg font-sans">
+                            Suscripción / Alquiler Cancha
+                        </h3>
+                        <i class="fa-regular fa-circle-question text-slate-700 text-sm cursor-pointer" title="Reserva de cancha completa de Fútbol 7 por 1 hora en Av. San Martín, Trevelin."></i>
+                    </div>
+
+                    <!-- Requested Exact Price ($ 40.000) -->
+                    <div class="mt-3">
+                        <div class="text-3xl sm:text-4xl font-light text-slate-900 tracking-tight font-sans">
+                            $ 40.000
+                        </div>
+                        <div class="text-xs text-slate-700 mt-1 font-medium">
+                            Cada turno (1 hora)
+                        </div>
+                    </div>
+
+                    <!-- Selected Summary Box -->
+                    <div class="mt-4 pt-3 border-t border-red-500/30 text-xs text-slate-800 space-y-1">
+                        <div><strong>Fecha:</strong> <span id="summary-date-display">No seleccionada</span></div>
+                        <div><strong>Horario:</strong> <span id="summary-time-display">No seleccionado</span></div>
+                        <div><strong>Ubicación:</strong> Av. San Martín, Trevelin</div>
+                    </div>
+                </div>
+
+                <!-- Form Inputs with Cyan Background & Oval Buttons -->
+                <form onsubmit="submitReservation(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-slate-800 font-medium mb-1">Nombre</label>
+                        <div class="relative">
+                            <input type="text" id="cust-name" required placeholder="Nombre (obligatorio)" class="w-full bg-[#80e9fd] border border-cyan-400 rounded-full px-4 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-800 shadow-inner">
+                            <span class="absolute right-3 top-2 text-[10px] text-slate-600 italic">(obligatorio)</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-800 font-medium mb-1">Apellido</label>
+                        <div class="relative">
+                            <input type="text" id="cust-lastname" required placeholder="Apellido (obligatorio)" class="w-full bg-[#80e9fd] border border-cyan-400 rounded-full px-4 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-800 shadow-inner">
+                            <span class="absolute right-3 top-2 text-[10px] text-slate-600 italic">(obligatorio)</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs text-slate-800 font-medium mb-1">Teléfono</label>
+                        <input type="tel" id="cust-phone" required placeholder="Teléfono" class="w-full bg-[#80e9fd] border border-cyan-400 rounded-full px-4 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-800 shadow-inner">
+                    </div>
+
+                    <!-- Dark Brown Oval Button ENVIAR -->
+                    <div class="pt-2">
+                        <button type="submit" class="bg-darkBrown hover:bg-darkBrownHover text-white font-bold px-8 py-2.5 rounded-full text-xs uppercase tracking-wider transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                            <span>ENVIAR</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 3. MODAL: SERVICIOS                                               -->
+    <!-- ================================================================= -->
+    <div id="modal-servicios" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 modal-glass">
+        <div class="bg-[#111827] border border-slate-700 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative text-white space-y-6">
+            <button onclick="closeModal('modal-servicios')" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <h3 class="font-bebas text-3xl text-cyanBtn tracking-wider">SERVICIOS DE LA GRAN 7</h3>
+                <p class="text-xs text-gray-400">Complejo Deportivo en Trevelin, Chubut</p>
+            </div>
+
+            <div class="space-y-3.5 text-sm">
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex gap-3">
+                    <i class="fa-solid fa-futbol text-cyanBtn text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Canchas Sintéticas de Fútbol 7</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Césped sintético homologado para máxima tracción y comodidad.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex gap-3">
+                    <i class="fa-solid fa-bolt text-cyanBtn text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Iluminación LED Profesional</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Torres de luz LED de alta fidelidad para partidos nocturnos.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex gap-3">
+                    <i class="fa-solid fa-shower text-cyanBtn text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Vestuarios Confortables</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Instalaciones higiénicas con duchas de agua caliente.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 flex gap-3">
+                    <i class="fa-solid fa-utensils text-cyanBtn text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Buffet & Tercer Tiempo</h4>
+                        <p class="text-xs text-gray-400 mt-0.5">Bebidas heladas, parrillas y ambiente social post-partido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeModal('modal-servicios')" class="w-full bg-slate-800 hover:bg-slate-700 text-gray-200 font-bold py-2.5 rounded-xl uppercase text-xs tracking-wider transition-colors">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 4. MODAL: CONTACTO                                                -->
+    <!-- ================================================================= -->
+    <div id="modal-contacto" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 modal-glass">
+        <div class="bg-[#111827] border border-slate-700 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative text-white space-y-6">
+            <button onclick="closeModal('modal-contacto')" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-1">
+                <h3 class="font-bebas text-3xl text-cyanBtn tracking-wider">CONTACTO & UBICACIÓN</h3>
+                <p class="text-xs text-gray-400">Trevelin, Chubut, Argentina</p>
+            </div>
+
+            <div class="space-y-4 text-sm">
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-location-dot text-cyanBtn text-lg"></i>
+                        <span class="text-gray-200">Av. San Martín, Trevelin, Chubut</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-phone text-cyanBtn text-lg"></i>
+                        <span class="text-gray-200">+54 9 2945 35-0580</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-clock text-cyanBtn text-lg"></i>
+                        <span class="text-gray-200">Todos los días: 07:00 hs a 23:00 hs</span>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/?text=Hola%20LA%20GRAN%207!%20Quisiera%20consultar%20por%20la%20reserva%20de%20canchas%20en%20Trevelin." target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-3 rounded-xl uppercase text-xs tracking-wider flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Contactar por WhatsApp</span>
+                </a>
+            </div>
+
+            <button onclick="closeModal('modal-contacto')" class="w-full bg-slate-800 hover:bg-slate-700 text-gray-200 font-bold py-2.5 rounded-xl uppercase text-xs tracking-wider transition-colors">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 5. MODAL: TICKET CONFIRMACIÓN DE RESERVA                          -->
+    <!-- ================================================================= -->
+    <div id="modal-success" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/85 modal-glass">
+        <div class="bg-[#111827] border border-cyan-500/40 w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative text-white space-y-6 text-center">
+            
+            <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-3xl border border-emerald-500/40">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <h3 class="font-bebas text-3xl text-cyanBtn tracking-wider">¡RESERVA REGISTRADA!</h3>
+                <p class="text-xs text-gray-300 mt-1">Tu turno en LA GRAN 7 Trevelin ha sido reservado con éxito.</p>
+            </div>
+
+            <div class="bg-slate-900 p-4 rounded-2xl border border-slate-800 text-left space-y-2 text-xs sm:text-sm text-gray-200">
+                <div class="flex justify-between border-b border-slate-800 pb-2">
+                    <span class="text-gray-400">Cliente:</span>
+                    <span id="ticket-client" class="font-bold text-white">-</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-2">
+                    <span class="text-gray-400">Teléfono:</span>
+                    <span id="ticket-phone" class="font-bold text-white">-</span>
+                </div>
+                <div class="flex justify-between border-b border-slate-800 pb-2">
+                    <span class="text-gray-400">Fecha & Hora:</span>
+                    <span id="ticket-datetime" class="font-bold text-cyanBtn">-</span>
+                </div>
+                <div class="flex justify-between pt-1">
+                    <span class="text-gray-400">Precio Total:</span>
+                    <span class="font-bold text-emerald-400 text-base">$ 40.000</span>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <button onclick="sendWhatsAppConfirmation()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold py-3 rounded-xl uppercase text-xs tracking-wider flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Confirmar por WhatsApp</span>
+                </button>
+                
+                <button onclick="closeModal('modal-success'); closeReservationView();" class="w-full bg-slate-800 hover:bg-slate-700 text-gray-300 font-bold py-2.5 rounded-xl uppercase text-xs tracking-wider">
+                    Volver al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- JAVASCRIPT APP LOGIC                                              -->
+    <!-- ================================================================= -->
+    <script>
+        // --- STATE MANAGEMENT ---
+        let currentDate = new Date(2026, 9, 1); // Default reference: Octubre 2026
+        let selectedDay = 15;
+        let selectedTime = "20:00 hs";
+
+        let lastBooking = {
+            name: "",
+            lastname: "",
+            phone: "",
+            dateStr: "",
+            timeStr: ""
+        };
+
+        // --- INIT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCalendar();
+            renderTimeSlots();
+            updateSummary();
+        });
+
+        // --- MODAL CONTROLS ---
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        // --- RESERVATION VIEW TOGGLE ---
+        function openReservationView() {
+            document.getElementById('reservation-view').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderCalendar();
+            renderTimeSlots();
+        }
+
+        function closeReservationView() {
+            document.getElementById('reservation-view').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- CALENDAR LOGIC ---
+        const monthNames = [
+            "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", 
+            "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"
+        ];
+
+        function prevMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            const monthTitle = `${monthNames[month]} DE ${year}`;
+            document.getElementById('calendar-month-year').innerText = monthTitle;
+
+            const grid = document.getElementById('calendar-days-grid');
+            grid.innerHTML = '';
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            // Empty padding cells before first day
+            for (let i = 0; i < firstDayIndex; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'h-10 sm:h-12';
+                grid.appendChild(emptyCell);
+            }
+
+            // Render day tiles
+            for (let day = 1; day <= totalDays; day++) {
+                const dayBox = document.createElement('button');
+                dayBox.type = 'button';
+                
+                const isSelected = (day === selectedDay);
+                
+                dayBox.className = `h-10 sm:h-12 rounded-lg flex flex-col justify-between p-1 font-semibold text-xs sm:text-sm transition-all border ${
+                    isSelected 
+                        ? 'bg-slate-900 text-cyanBtn border-slate-900 shadow-md scale-105 font-bold' 
+                        : 'bg-cyan-200/60 hover:bg-cyan-100 text-slate-900 border-cyan-400/40'
+                }`;
+
+                dayBox.innerHTML = `<span class="self-end text-[10px] sm:text-xs opacity-80">${day}</span>`;
+
+                dayBox.onclick = () => {
+                    selectedDay = day;
+                    renderCalendar();
+                    updateSummary();
+                };
+
+                grid.appendChild(dayBox);
+            }
+
+            updateSummary();
+        }
+
+        // --- AVAILABLE HOURS (07:00 am to 23:00 pm) ---
+        function renderTimeSlots() {
+            const container = document.getElementById('time-slots-container');
+            container.innerHTML = '';
+
+            for (let hour = 7; hour <= 23; hour++) {
+                const timeFormatted = `${hour.toString().padStart(2, '0')}:00 hs`;
+                const isSelected = (timeFormatted === selectedTime);
+
+                const slotBtn = document.createElement('button');
+                slotBtn.type = 'button';
+                slotBtn.className = `py-1.5 px-2 rounded-lg text-xs font-bold transition-all border ${
+                    isSelected 
+                        ? 'bg-slate-900 text-cyanBtn border-slate-900 shadow' 
+                        : 'bg-white/80 hover:bg-white text-slate-900 border-cyan-400/50'
+                }`;
+
+                slotBtn.innerText = timeFormatted;
+                slotBtn.onclick = () => {
+                    selectedTime = timeFormatted;
+                    renderTimeSlots();
+                    updateSummary();
+                };
+
+                container.appendChild(slotBtn);
+            }
+        }
+
+        // --- UPDATE SUMMARY CARD ---
+        function updateSummary() {
+            const monthStr = monthNames[currentDate.getMonth()];
+            const yearStr = currentDate.getFullYear();
+            const fullDateStr = `${selectedDay} de ${monthStr}, ${yearStr}`;
+
+            const labelEl = document.getElementById('selected-date-label');
+            if (labelEl) labelEl.innerText = `${selectedDay} ${monthStr.substring(0,3)}`;
+
+            const dateDisp = document.getElementById('summary-date-display');
+            if (dateDisp) dateDisp.innerText = fullDateStr;
+
+            const timeDisp = document.getElementById('summary-time-display');
+            if (timeDisp) timeDisp.innerText = selectedTime || "No seleccionado";
+
+            lastBooking.dateStr = fullDateStr;
+            lastBooking.timeStr = selectedTime;
+        }
+
+        // --- SUBMIT RESERVATION ---
+        function submitReservation(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('cust-name').value.trim();
+            const lastname = document.getElementById('cust-lastname').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+
+            if (!name || !lastname || !phone) {
+                return;
+            }
+
+            lastBooking.name = name;
+            lastBooking.lastname = lastname;
+            lastBooking.phone = phone;
+
+            // Populate receipt modal
+            document.getElementById('ticket-client').innerText = `${name} ${lastname}`;
+            document.getElementById('ticket-phone').innerText = phone;
+            document.getElementById('ticket-datetime').innerText = `${lastBooking.dateStr} - ${lastBooking.timeStr}`;
+
+            openModal('modal-success');
+        }
+
+        // --- WHATSAPP CONFIRMATION ---
+        function sendWhatsAppConfirmation() {
+            const text = `Hola LA GRAN 7 (Trevelin)! Quisiera confirmar la reserva de cancha:\n\n*Cliente:* ${lastBooking.name} ${lastBooking.lastname}\n*Teléfono:* ${lastBooking.phone}\n*Fecha:* ${lastBooking.dateStr}\n*Hora:* ${lastBooking.timeStr}\n*Precio:* $ 40.000\n*Ubicación:* Av. San Martín, Trevelin, Chubut`;
+            
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
+        // Close modals on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal('modal-servicios');
+                closeModal('modal-contacto');
+                closeModal('modal-success');
+            }
+        });
+    </script>
+</body>
+</html>
